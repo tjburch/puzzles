@@ -242,9 +242,9 @@ if __name__ == "__main__":
     time = datetime.now().isoformat()
     num_simulations = int(sys.argv[1])
 
-    with open('data/run_{0}_simulations{1}.csv'.format(time,num_simulations),'w') as f:
+    with open('data/run_simulations{1}.csv'.format(time,num_simulations),'w') as f:
         # Make csv_header
-        f.write('simulation_no, home_score, away_score, total_score\n')
+        f.write('simulation_no,home_score,away_score,total_score\n')
         # Run n simulations
         for i in range(0,num_simulations):
             simulation = Game()
@@ -253,4 +253,4 @@ if __name__ == "__main__":
             away_score = sum(simulation.away_box_score)
             total_score = home_score + away_score
 
-            f.write('%i, %i, %i, %i\n' % (i, home_score, away_score, total_score))
+            f.write('%i,%i,%i,%i\n' % (i, home_score, away_score, total_score))
