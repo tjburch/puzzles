@@ -61,4 +61,4 @@ Other tried fits:
 
 Raw Histogram:
 
-![](plots/scoring_histogram.png)
+![](plots/raw_scoring_histogram.png)
