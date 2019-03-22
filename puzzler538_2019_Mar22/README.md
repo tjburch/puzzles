@@ -28,9 +28,9 @@ Over the years, people have invented many games that simulate baseball using two
 
 Given those rules, what’s the average number of runs that would be scored in nine innings of this dice game? What’s the distribution of the number of runs scored? (Histograms welcome.) You can assume some standard baseball things, like runners scoring from second on singles and runners scoring from third on fly outs.
 
-## Solution Histogram with fits:
+## Solution Histogram with fit:
 
-![](plots/scoring_histogram.png)
+![](plots/scoring_histogram_skewGaus.png)
 
 
 ## Directory Content:
@@ -51,3 +51,14 @@ Handling double plays - this is sort of a weird way to progress the game, since 
 - Also assume no advancement for other runners in a double play
 
 Also I created new scenario for 3 strikes rolled in a row in advancing the state called "strike out" to be asserted to the game but this effectively just works like a foul out - increases number of outs without advancing any runners, doesn't change any sort of conditions from the problem.
+
+
+## other plots
+
+Other tried fits:
+
+![](plots/scoring_histogram_allfits.png)
+
+Raw Histogram:
+
+![](plots/scoring_histogram.png)
