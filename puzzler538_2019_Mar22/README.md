@@ -37,7 +37,7 @@ Given those rules, what’s the average number of runs that would be scored in n
 
 **simulator.py** - Script to simulate n number of games, where n is the argument given
 
-
+**score_analysis.ipynb** - Just makes the plot shown above
 
 Some notes in developing the simulation -
 
@@ -50,4 +50,4 @@ Handling double plays - this is sort of a weird way to progress the game, since 
 - If there's not a force out available but someone on base, for now we should just assume that they only get the out at first since that's *by far* the most likely scenario. Could do a study at rate at which this happens but that's a lot for a puzzle.
 - Also assume no advancement for other runners in a double play
 
-Also created new scenario for 3 strikes in advancing the state.
+Also I created new scenario for 3 strikes rolled in a row in advancing the state called "strike out" to be asserted to the game but this effectively just works like a foul out - increases number of outs without advancing any runners, doesn't change any sort of conditions from the problem.
