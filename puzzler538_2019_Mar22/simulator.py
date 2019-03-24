@@ -10,20 +10,20 @@ class Game:
         self.away_box_score = []
         self.home_box_score = []
 
-    def simulate(self):
+    def simulate(self,custom_dict=None):
 
         # simulate both away and home innings for 9 innings
         for inning in range(1,10):
-            away_runs_scored = Inning().simulate()
-            home_runs_scored = Inning().simulate()
+            away_runs_scored = Inning().simulate(custom_dict)
+            home_runs_scored = Inning().simulate(custom_dict)
             # Update the score
             self.away_box_score.append(away_runs_scored)
             self.home_box_score.append(home_runs_scored)
 
         # Keep going until there isn't a tie
         while sum(self.away_box_score) == sum(self.home_box_score):
-            away_runs_scored = Inning().simulate()
-            home_runs_scored = Inning().simulate()
+            away_runs_scored = Inning().simulate(custom_dict)
+            home_runs_scored = Inning().simulate(custom_dict)
             # Update the score
             self.away_box_score.append(away_runs_scored)
             self.home_box_score.append(home_runs_scored)
@@ -37,11 +37,11 @@ class Inning:
         self.runs_scored_inning = 0
         self.field = Field()
 
-    def simulate(self):
+    def simulate(self, custom_dict=None):
         # Run at bats until inning is over
         while self.outs < 3:
             # simulate at bat
-            ab_result = AtBat()
+            ab_result = AtBat(custom_dict)
             # issue result to Field
             runs_scored, outs_recorded = self.field.update(ab_result.outcome)
 
@@ -187,36 +187,37 @@ class Field:
 
 class AtBat:
 
-    def __init__(self):
+    def __init__(self, custom_dict=None):
         self.strikes = 0
         self.outcome = None
 
         dice_result = tuple(throw_dice())
-        #print(dice_result)
-        result_dictionary = {
-            (1, 1): 'double',
-            (1, 2): 'single',
-            (1, 3): 'single',
-            (1, 4): 'single',
-            (1, 5): 'base on error',
-            (1, 6): 'base on balls',
-            (2, 2): 'strike',
-            (2, 3): 'strike',
-            (2, 4): 'strike',
-            (2, 5): 'strike',
-            (2, 6): 'foul out',
-            (3, 3): 'out at 1st',
-            (3, 4): 'out at 1st',
-            (3, 5): 'out at 1st',
-            (3, 6): 'out at 1st',
-            (4, 4): 'fly out',
-            (4, 5): 'fly out',
-            (4, 6): 'fly out',
-            (5, 5): 'double play',
-            (5, 6): 'triple',
-            (6, 6): 'home run',
-        }
-
+        if custom_dict:
+            result_dictionary = custom_dict
+        else:
+            result_dictionary = {
+                (1, 1): 'double',
+                (1, 2): 'single',
+                (1, 3): 'single',
+                (1, 4): 'single',
+                (1, 5): 'base on error',
+                (1, 6): 'base on balls',
+                (2, 2): 'strike',
+                (2, 3): 'strike',
+                (2, 4): 'strike',
+                (2, 5): 'strike',
+                (2, 6): 'foul out',
+                (3, 3): 'out at 1st',
+                (3, 4): 'out at 1st',
+                (3, 5): 'out at 1st',
+                (3, 6): 'out at 1st',
+                (4, 4): 'fly out',
+                (4, 5): 'fly out',
+                (4, 6): 'fly out',
+                (5, 5): 'double play',
+                (5, 6): 'triple',
+                (6, 6): 'home run',
+            }
         result = result_dictionary[dice_result]
         while result == 'strike' and self.strikes != 2:
             # add a strike
