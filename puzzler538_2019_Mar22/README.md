@@ -1,4 +1,6 @@
-https://fivethirtyeight.com/features/can-you-turn-americas-pastime-into-a-game-of-yahtzee/
+[Original problem page](https://fivethirtyeight.com/features/can-you-turn-americas-pastime-into-a-game-of-yahtzee/)
+
+Riddler Classic solution featured - see [here](https://fivethirtyeight.com/features/can-you-win-a-spelling-bee-if-you-know-99-percent-of-the-words/)
 
 ## Riddler Express:
 
@@ -48,7 +50,7 @@ Once you’ve matched the run-scoring environment, try to add other variables to
 
 In other words, how closely can you simulate the grand, yet subtle, complexities of the national pastime using only a pair of cubes? What does your roll list look like?
 
-### __Solution__ - 
+### __Solution__ -
 
 Extending the philosophy from the express portion, the figure of merit for my solution is intended to be the mean and distribution of runs scored in a real MLB game. A solution was obtained by taking MLB data from 2018 using Statcast. First, to get close to the answer, assuming the simulation is written fine, mirroring the rates of the real life outcomes to the dice roll outcomes should get close to the solution. I found the rates of various events in real baseball and how frequently they occurred with respect to each other. Using this method, I was able to fill out all but 5 of the dice rolls. Since this should be ~close to the real mean I just tried to cancel out those by putting 3 good, 1 base events (singles, base on balls), and 2 bad events (outs). From there I ran the simulation, plotted the histogram, then tuned the last couple of outcomes to get the mean as close as possible. This work process can be seen in classic_solution.ipynb. The final result:
 
@@ -111,4 +113,3 @@ Also I created new scenario for 3 strikes rolled in a row in advancing the state
 Other tried fits:
 
 ![](plots/scoring_histogram_allfits.png)
-
