@@ -110,6 +110,14 @@ if __name__ == "__main__":
             player.simulate_career()
 
 
+    # Calculate fraction above Dimaggio's 56
+    streaks = [np.array(pl.longest_streaks) for pl in players]
+
+    fraction_record_seasons = []
+    for player in players:
+        all_streaks = np.array(player.longest_streaks)
+        beat_record = all_streaks[all_streaks > 56]
+        fraction_record_seasons.append(beat_record.shape[0]/all_streaks.shape[0])
 
     # Plot the longest streaks
     streaks = [np.array(pl.longest_streaks) for pl in players]
@@ -131,19 +139,19 @@ if __name__ == "__main__":
     plt.xlabel('Players', fontsize=14)
     plt.ylabel('Longest Hitting Streak', fontsize=16)
 
-    plt.ylim(bottom=0)
+    ymin,ymax = plt.gca().get_ylim()
+    ax.set_ylim(top=ymax*1.1)
     # Add mean annotation
     hfont = {'fontname':'Helvetica'}
     means = [a.mean() for a in streaks]
 
     for meanval, i in zip(means, range(0,len(means))):
-        plt.annotate("mean = %.1f"%meanval, xy=(i, 5), ha='center', fontsize=12, style='normal', **hfont)
+        plt.annotate("mean = %.1f"%meanval, xy=(i, ymax*1.03), ha='center', fontsize=10, style='normal', **hfont)
+        plt.annotate("{0}% Record".format(100*fraction_record_seasons[i]), xy=(i,ymax*1.06), ha='center', fontsize=10, **hfont) 
 
     # Annotate DiMaggio Line and Simulations
     plt.axhline(y=56, linestyle='--',color='forestgreen')
-    plt.annotate("DiMaggio Record", xy=(0.4,58), color='forestgreen')#, **hfont)
-    plt.annotate("{0} Simulations per Player".format(n_simulations), xy=(0.005,0.95), ha='left', 
-                 xycoords='axes fraction', fontsize=16, **hfont)
+    plt.annotate("DiMaggio Record", xy=(-0.3,58), color='forestgreen', fontsize=12, **hfont)
 
     # Make better looking
     ## Gridlines
@@ -152,11 +160,10 @@ if __name__ == "__main__":
 
     plt.annotate(s="Tyler James Burch", xy=(.01,.033), xycoords='figure fraction',
                      textcoords='figure fraction', color='grey',alpha=0.7, fontsize=10)
-    
+
+    plt.annotate("{0} Simulations each".format(n_simulations), xy=(0.98,0.02), ha='right', fontsize=12, xycoords='axes fraction', **hfont) 
+
     plt.tight_layout()
-
-
-
 
     plt.savefig('plots/longest_streaks')
 
