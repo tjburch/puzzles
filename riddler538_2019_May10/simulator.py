@@ -17,9 +17,7 @@ def calculate_streaks(outcome_list, delimiter):
     sublist_generator = (
         list(g) for k, g in groupby(outcome_list, key=lambda x: x != delimiter) if k
     )
-    for i in sublist_generator:
-        all_streaks.append(i)
-    return all_streaks
+    return sublist_generator
 
 
 # Classes for various stretches
@@ -48,9 +46,7 @@ class PlayerSeason:
         self.game_results = np.any(
             self.all_ab_outcomes == 1, axis=1
         )  # evaluates to True if a hit
-        self.longest_streak = max(
-            [len(streak) for streak in calculate_streaks(self.game_results, False)]
-        )
+
 
 
 class PlayerCareer:
@@ -66,14 +62,8 @@ class PlayerCareer:
 
         # Join all season hits into one large array
         self.career_game_results = self.full_hit_gamelog.flatten("F")
-        self.longest_streak = max(
-            [
-                len(streak)
-                for streak in calculate_streaks(self.career_game_results, False)
-            ]
-        )
+        self.longest_streak = max([len(streak) for streak in calculate_streaks(self.career_game_results, False)])
 
-        #print(self.longest_streak)
 
 
 class PlayerSimulation:
@@ -103,7 +93,7 @@ if __name__ == "__main__":
         PlayerSimulation(0.500,10),
     ]
 
-    n_simulations = 10
+    n_simulations = 1000
     for iSim in range(0,n_simulations):
         # Run simulations for all players
         for player in players:
@@ -162,7 +152,6 @@ if __name__ == "__main__":
                      textcoords='figure fraction', color='grey',alpha=0.7, fontsize=10)
 
     plt.annotate("{0} Simulations each".format(n_simulations), xy=(0.98,0.02), ha='right', fontsize=12, xycoords='axes fraction', **hfont) 
-
     plt.tight_layout()
 
     plt.savefig('plots/longest_streaks')
