@@ -1,4 +1,3 @@
-from random import random
 import numpy as np
 from itertools import groupby
 import matplotlib.pyplot as plt
@@ -42,7 +41,7 @@ class PlayerSeason:
             self.all_ab_outcomes[i] = this_game.outcomes
 
         # Calculate useful quantities
-        self.all_ab_results = self.all_ab_outcomes.flatten("F")
+        self.all_ab_results = self.all_ab_outcomes.ravel("F")
         self.game_results = np.any(
             self.all_ab_outcomes == 1, axis=1
         )  # evaluates to True if a hit
@@ -54,14 +53,18 @@ class PlayerCareer:
 
         # Simulate all seasons
         self.full_hit_gamelog = np.empty(shape=(seasons, games_per_season))
+        self.full_ab_results = np.empty(shape=(seasons, games_per_season, number_atbats_per_game))
 
         for i in range(0, seasons):
             this_season = PlayerSeason(BA, games_per_season)
-
+            
             self.full_hit_gamelog[i, :] = this_season.game_results
+            self.full_ab_results[i] = this_season.all_ab_outcomes
 
         # Join all season hits into one large array
-        self.career_game_results = self.full_hit_gamelog.flatten("F")
+        self.career_game_results = self.full_hit_gamelog.ravel("F")
+        self.career_ab_results = self.full_ab_results.ravel("F")
+        self.simulated_BA = self.career_ab_results.sum() / self.career_ab_results.shape[0]
         self.longest_streak = max([len(streak) for streak in calculate_streaks(self.career_game_results, False)])
 
 
@@ -74,12 +77,14 @@ class PlayerSimulation:
         
         # Simulate by season
         self.longest_streaks = []
-        self.total_hits = 0
+        self.simulated_BA = []
 
     def simulate_career(self):
         career_stats = PlayerCareer(self.BA, self.seasons_played)
         self.longest_streaks.append(career_stats.longest_streak)
-
+        self.simulated_BA.append(career_stats.simulated_BA)
+        
+        
 
 if __name__ == "__main__":
 
@@ -93,7 +98,7 @@ if __name__ == "__main__":
         PlayerSimulation(0.500,10),
     ]
 
-    n_simulations = 1000
+    n_simulations = 100
     for iSim in range(0,n_simulations):
         # Run simulations for all players
         for player in players:
@@ -122,7 +127,7 @@ if __name__ == "__main__":
                      ".500 BA\n10 Szns",                     
     ]
     df = pd.DataFrame.from_items(zip(edited_labels,streaks))
-    ax = sns.boxplot(x='variable',y='value',data=pd.melt(df), color="dodgerblue")
+    ax = sns.boxplot(x='variable',y='value',data=pd.melt(df), color="dodgerblue", showfliers=False)
 
 
     # Add Labels
@@ -137,7 +142,7 @@ if __name__ == "__main__":
 
     for meanval, i in zip(means, range(0,len(means))):
         plt.annotate("mean = %.1f"%meanval, xy=(i, ymax*1.03), ha='center', fontsize=10, style='normal', **hfont)
-        plt.annotate("{0}% Record".format(100*fraction_record_seasons[i]), xy=(i,ymax*1.06), ha='center', fontsize=10, **hfont) 
+        plt.annotate("%.1f%% Record" % (100*fraction_record_seasons[i]), xy=(i,ymax*1.06), ha='center', fontsize=10, **hfont) 
 
     # Annotate DiMaggio Line and Simulations
     plt.axhline(y=56, linestyle='--',color='forestgreen')
@@ -155,4 +160,37 @@ if __name__ == "__main__":
     plt.tight_layout()
 
     plt.savefig('plots/longest_streaks')
+    plt.close()
 
+    ################################################
+    # Make AB results histograms as validation Plots
+    ################################################
+    simulated_ba = [np.array(pl.simulated_BA) for pl in players]
+    df_hits = pd.DataFrame.from_items(zip(edited_labels,simulated_ba))
+
+    fig = plt.figure()
+    bas = [.2,.25,.3,.35,.4,.5]
+    for av in bas:
+        plt.axhline(y=av, color='gainsboro', linestyle='--', linewidth=1)
+
+    ax = sns.violinplot(x='variable',y='value',data=pd.melt(df_hits), color="dodgerblue")
+
+    # Add Labels
+    plt.xlabel('Players', fontsize=14)
+    plt.ylabel('Batting average', fontsize=16)
+    ymin,ymax = plt.gca().get_ylim()
+    ax.set_ylim(top=ymax*1.1)
+
+
+    stds = [np.std(arr) for arr in simulated_ba]
+    means = [np.mean(arr) for arr in simulated_ba]
+    for meanval, stdval, i in zip(means, stds, range(0,len(means))):
+        plt.annotate("BA = %.3f"%meanval, xy=(i, ymax*1.06), ha='center', fontsize=10, style='normal', **hfont)
+        plt.annotate("std = %.3f"%stdval, xy=(i, ymax*1.03), ha='center', fontsize=10, style='normal', **hfont)
+
+    plt.annotate(s="Tyler James Burch", xy=(.01,.033), xycoords='figure fraction',
+                textcoords='figure fraction', color='grey',alpha=0.7, fontsize=10)    
+    plt.annotate("{0} Simulations each".format(n_simulations), xy=(0.98,0.02), ha='right', fontsize=12, xycoords='axes fraction', **hfont) 
+
+    plt.tight_layout()
+    plt.savefig('plots/simulated_ba')
