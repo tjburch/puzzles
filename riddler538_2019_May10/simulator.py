@@ -127,7 +127,7 @@ if __name__ == "__main__":
                      ".500 BA\n10 Szns",                     
     ]
     df = pd.DataFrame.from_items(zip(edited_labels,streaks))
-    ax = sns.boxplot(x='variable',y='value',data=pd.melt(df), color="dodgerblue", showfliers=False)
+    ax = sns.boxplot(x='variable',y='value',data=pd.melt(df), color="dodgerblue", whis=[5,95], showfliers=False)
 
 
     # Add Labels
@@ -156,7 +156,8 @@ if __name__ == "__main__":
     plt.annotate(s="Tyler James Burch", xy=(.01,.033), xycoords='figure fraction',
                      textcoords='figure fraction', color='grey',alpha=0.7, fontsize=10)
 
-    plt.annotate("{0} Simulations each".format(n_simulations), xy=(0.98,0.02), ha='right', fontsize=12, xycoords='axes fraction', **hfont) 
+    plt.annotate("{0:,} Simulations Each".format(n_simulations), xy=(0.98,0.06), ha='right', fontsize=12, xycoords='axes fraction', **hfont) 
+    plt.annotate("95th Percentile Shown".format(n_simulations), xy=(0.98,0.02), ha='right', fontsize=12, xycoords='axes fraction', **hfont) 
     plt.tight_layout()
 
     plt.savefig('plots/longest_streaks')
