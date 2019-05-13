@@ -11,7 +11,9 @@ games_per_season = 160
 
 # Generically Useful Functions
 def calculate_streaks(outcome_list, delimiter):
-    """ returns a list of lists for all the streaks"""
+    """ returns a list of lists for all the streaks
+        This appears to be the bottleneck, perhaps a way to do this faster
+    """
     all_streaks = []
     sublist_generator = (
         list(g) for k, g in groupby(outcome_list, key=lambda x: x != delimiter) if k
@@ -98,7 +100,7 @@ if __name__ == "__main__":
         PlayerSimulation(0.500,10),
     ]
 
-    n_simulations = 100
+    n_simulations = 100000
     for iSim in range(0,n_simulations):
         # Run simulations for all players
         for player in players:
