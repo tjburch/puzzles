@@ -23,6 +23,12 @@ def clean_file(filename):
 
         reader = csv.DictReader(f)    
         for row in reader:
+            try:
+                if (int(row["Castle 1"]) + int(row["Castle 2"]) + int(row["Castle 3"]) + int(row["Castle 4"]) + int(row["Castle 5"]) + int(row["Castle 6"]) + int(row["Castle 7"]) + int(row["Castle 8"]) + int(row["Castle 9"]) + int(row["Castle 10"]) != 100):
+                    continue
+            except ValueError:
+                continue
+
             fout.write(
                 row["Castle 1"] + "," +
                 row["Castle 2"] + "," +
