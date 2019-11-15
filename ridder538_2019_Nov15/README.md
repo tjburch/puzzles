@@ -13,7 +13,7 @@ What will be your average final score in this game?
 
 ### __Solution__ - 0.474
 
-This problem is relatively straightforward, throwing a random number sequentially and adding to the solution integer if it meets all the conditions. This is fairly straighforward in python, the code for which can be seen in the enclosed Jupyter notebook. 
+This problem is relatively straightforward, throwing a random number sequentially and adding to the solution integer if it meets all the conditions. This is fairly straightforward in python, the code for which can be seen in [this git repository](https://github.com/tjburch/puzzles/tree/master/ridder538_2019_Nov15). 
 
 To get a guess of what to expect, we can consider if we start by rolling a 1, the solution space is forced to a regime between 0.111... and 0.10. Conversely, if we start with a 9, the solution space is more flexible, ranging from 0.999... to 0.90. Thus, with a broader solution space toward the top of the value spectrum, we expect a bias upward in comparison to just a random value over the space [0,9], which would be 4.5. After simulating many trials, we can plot the values returned and see that constrained solution space:
 
