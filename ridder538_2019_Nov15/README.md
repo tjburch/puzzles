@@ -11,7 +11,7 @@ For example, suppose you roll the following: 6, 2, 5, 1, 8, 1, 0. After your fir
 
 What will be your average final score in this game?
 
-### __Solution__ - 0.454
+### __Solution__ - 0.474
 
 This problem is relatively straightforward, throwing a random number sequentially and adding to the solution integer if it meets all the conditions. This is fairly straighforward in python, the code for which can be seen in the enclosed Jupyter notebook. 
 
