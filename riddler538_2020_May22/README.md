@@ -60,7 +60,7 @@ As expected, these exhibit a negative correlation, to the tune of -0.53, meaning
 
 **python/data-download.py** - Gets the data, both the wordlist and statelist and saves as pickle files.
 
-**puzzle-solution.ipynb** - Jupyter notebook where data is analyzed and the plots shown here are made.
+**python/puzzle-solution.ipynb** - Jupyter notebook where data is analyzed and the plots shown here are made.
 
 
 
