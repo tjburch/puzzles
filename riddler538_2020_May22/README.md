@@ -11,6 +11,9 @@
 
 > Extra credit: Which state has the most “mackerels?” That is, which state has the most words for which it is the only state without any letters in common with those words?
 
+
+* The way this problem is worded lends to a lot of double negatives in describing this work, so I've used the terminology of a "mackerel" for words that meet the problem criteria of sharing characters with all states but one.
+
 ## __Solution__ -
 
 
@@ -28,32 +31,32 @@ The word with the most unique characters is "phenylthiocarbamides," which uses a
 
 > It has the unusual property that it either tastes very bitter or is virtually tasteless, depending on the genetic makeup of the taster. 
 
-Next, I went ahead and tackled the problem at hand. I wrote a function in python that compared each word against each state. If the word doesn't share characters with one and only one state, the function returns that state, otherwise it returns a ```None```, which is used in a simple logic flow to solve the subsequent problems. To manage computation time, I tried to escape this function as quickly as possible - as soon as it doesn't share words with two states, ```None``` is returned indicating that it's failed. 
+Next, I went ahead and tackled the problem at hand. I wrote a function in python that compared each word against each state. If the word doesn't share characters with one and only one state, the function returns that state, otherwise it returns a ```None```, which is used in a simple logic flow to solve the subsequent problems. To manage computation time, I tried to escape this function as quickly as possible - as soon as it doesn't share words with two states, it isn't a "mackerel" candidate so ```None``` is returned indicating that it's failed. 
 
-For the first part of the problem, I need to find the length of the longest word that shares no letters with only one state. I start at the longest word, and work my way to shorter words until the criteria is met. The function stopped at "Hydrochlorofluorocarbon," which shares no letters with just the state of Mississippi. Since that is length 23, I then rerun the function for all words of that length to check for any ties, which there was one, so the solution to the problem is:
+For the first part of the problem, I need to find the length of the longest word that meets the "mackerel" criteria. I start at the longest word, and work my way to shorter words until the criteria is met. The function stopped at "Hydrochlorofluorocarbon," which shares no letters with just the state of Mississippi. Since that is length 23, I then rerun the function for all words of that length to check for any ties, which there was one, so the solution to the problem is:
 
 ### There are **2** words of length **23** who don't share letters with _exactly_ one state. The two words are:
 
 - **Counterproductivenesses** which doesn't share letters with **Alabama**
 - **Hydrochlorofluorocarbon** which doesn't share letters with **Mississippi**
 
-From there, I removed the stopping condition once a match was found, and reran for the full dataset (I found computationally, this problem was manageable, so this ran quickly). I found 45,385 words that met the criteria of sharing letters with all but one state. These words match the total population well, the mean length is similar at 9.37.
+From there, I removed the stopping condition once a match was found, and reran for the full dataset (I found computationally, this problem was manageable, so this ran quickly). I found 45,385 words that met the criteria of sharing letters with all but one state. These words match the total population well, the mean word length is similar at 9.37.
 
 ![](plots/passing_distribution.png)
 
-Next, I look at the extra credit portion of the question - which state has the most words which don't share letters with only it. The way I set up the iterating function, it returned the state; this return was designed to solve this part of the problem. I summed the counts for each state and found the following results:
+Next, I look at the extra credit portion of the question - which state has the most words which don't share letters with only it. The way I set up the function to check if a word was a "mackerel," it returned the name of the state which it shared no letters with; this return was designed to solve this part of the problem. I summed the counts for each state and found the following results:
 
 ![](plots/states_distribution.png)
 
 This gives us the solution that:
 
-### **Ohio** has the most "mackerels," words that don't share letters with only that state, at 11,342 words.
+### **Ohio** has the most "mackerels," words that don't share letters with only that state, at **11,342** words.
 
-One note here is that four states with the most "Mackerels" are Ohio (11,342), Alabama (8,274), Utah (6,619), and Mississippi (4,863). These are notable because they have 3, 4, 4, and 4 _unique_ letters in them, respectively. This gets back to something I mentioned earlier: the real question is how many unique characters are in each. So I took a look at the correlation between number of "mackerels," the words that don't share letters with only that state, and the number of unique characters in the state name. 
+One note here is that four states with the most "Mackerels" are Ohio (11,342), Alabama (8,274), Utah (6,619), and Mississippi (4,863). These are notable because they have 3, 4, 4, and 4 _unique_ letters in them, respectively. This gets back to something I mentioned earlier: the real question here is how many _unique_ characters are in each. So I took a look at the correlation between number of "mackerels," the words that don't share letters with only that state, and the number of unique characters in the state name. 
 
 ![](plots/scatter_state.png)
 
-As expected, these exhibit a negative correlation, to the tune of -0.53, meaning the more unique characters a state has, the fewer of these words we expect. In fact, the states with the fewest both have 7 unique characters, Connecticut and Michigan, with 9 and 4 "mackerels" respectively. The states with the most unique characters, North Dakota and New Mexico, each with 9 unique characters, are both in the bottom 6 in terms of number of "mackerels."
+As expected, these exhibit a negative correlation, to the tune of -0.53, meaning the more unique characters a state has, the fewer of these words we expect. The states with the fewest number of "mackerels" both have 7 unique characters, Connecticut (9 "mackerels") and Michigan (7 "mackerels"). The states with the most unique characters are North Dakota and New Mexico, each with 9 unique characters. As expected, both of these are in the bottom 6 in terms of number of "mackerels," with 54 and 30 respectively.
 
 
 ## Directory Content:
