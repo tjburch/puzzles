@@ -16,8 +16,6 @@
 
 First things first, I downloaded the data linked in the original problem statement, Peter Norvig's [word list](https://norvig.com/ngrams/word.list), and created a list of state names. Before diving into the solution, I took an exploratory look at the data, looking at word lengths. There are 263,533 words in total, with the mean word length being 9.3, median of 9, and standard deviation of 2.9. The longest word included in the dataset is "pneumonoultramicroscopicsilicovolcanoconiosis," which according to [dictionary.com](https://www.dictionary.com/browse/pneumonoultramicroscopicsilicovolcanoconiosis), is 
 
-> Pneumonoultramicroscopicsilicovolcanoconiosis [noo-muh-noh-uhl-truh-mahy-kruh-skop-ik-sil-i-koh-vol-key-noh-koh-nee-oh-sis, nyoo-] 
-
 >An obscure term ostensibly referring to a lung disease caused by silica dust, sometimes cited as one of the longest words in the English language.
 
  In essence, that's not really the question we're worried about. For the comparison we're making, we're interested in the number of _unique_ characters in each word. Those figures are lower than the total dataset - the mean is 7.71, median is 8, and standard deviation is 1.9. Further, that's just 101,137 unique character sets.
