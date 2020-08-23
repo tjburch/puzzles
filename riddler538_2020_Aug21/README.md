@@ -42,7 +42,7 @@ p_i ~ Uniform(0,1)
 
 Flat priors are used for p_1 and p_2. Given our data, we see 0 is the most common value, so most likely both p values will be low, below 0.5. However, since many observations were simulated (25,000), there's flexibility to have less informative priors. With so many observations, the data will be the dominant factor in shaping the posterior. 
 
-The flat prior, \text{Uniform}(0,1), does provide information to the model in terms of bounds - on each time interval, each source has between a 0% and 100% chance of emitting. We don't permit for negative or greater than 100% probabilities, since those don't make much physical sense.
+The flat prior, Uniform(0,1), does provide information to the model in terms of bounds - on each time interval, each source has between a 0% and 100% chance of emitting. We don't permit for negative or greater than 100% probabilities, since those don't make much physical sense.
 
 
 ### Fitting the model
