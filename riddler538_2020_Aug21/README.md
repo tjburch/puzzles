@@ -110,3 +110,22 @@ The highest emission probability consistent with our data was found to be p = 0.
 The lowest emission probability was found to be p=0.335, with a corresponding probability from the second source of p=0.378 (outside upper limits of 95% credible credible interval).
 
 As mentioned, these are the most extreme values, so very, very unlikely to be realized, and we should lend effectively no belief to values below p=0.33 or above p=0.39.
+
+# Post-Mortem Reflection
+
+
+After submission, I realized this solution isn't 100% correct. The quickest red flag that I should have considered was plotting the most observed data proportions against a Poisson Binomial function using the most likely p values.
+
+![](plots/map_v_data.svg)
+
+The given proportions in the problem aren't anywhere close to the Poisson Binomial distribution these p values. Whoops. This should be causing alarm bells that I previously missed, and it caused me to backtrack and think some more about this problem. Like I mentioned above, these are new tools and analysis approaches that I'm currently developing, so I'm taking this error as a learning experience.
+
+This back-of-the-envelope check isn't 100% correct though - it's ignoring the fact that the two values covary and just picking the most probable values. In order to appropriately compare our model to observed data, I quickly re-implemented the model to get the posterior. The posterior contained explicitly covarying sets of values for p_a and p_b, so using those sets of values, I generated sets of observations equal to our original dataset (n=25000).
+
+![](plots/limit_plot.svg)
+
+Here, the blue histogram shows the expected central value given the parameter values from sampling our posterior. The green shading around the top indicates the 2σ band (95% coverage), and the black is the original data, with Poisson errors.
+
+Given this, I should cycle back to my answer. This model would need a 23.4σ deviation in order to cover the data proportions we observe, this gives us incredible certainty that it isn't generating our data. Reminder that 5$\sigma$ equates to 99.99994% confidence, so 24$\sigma$ is effectively "not likely to happen by the inevitable heat death of the universe" territory, so maybe, in this case, you shouldn't be as trusting of your advisor as I originally thought.
+
+See ```reflection.ipynb``` for code for the post-mortem reflection.
