@@ -1,5 +1,7 @@
 This year I've been trying to learn more about probabilistic programming and Bayesian inference. Additionally, I've been playing around with some other programming languages, R and Julia. This week's [Riddler question at FiveThirtyEight]((https://fivethirtyeight.com/features/can-you-corral-your-hamster/)) seemed like a good opportunity to utilize these things - I did this solution in Julia, using the [Turing.jl](https://turing.ml/dev/) probabilistic programming library.
 
+This solution mentioned in the featured solutions - see [here](https://fivethirtyeight.com/features/can-you-cover-the-globe/)
+
 ## Riddler Express
 
 >When you started your doctorate several years ago, your astrophysics lab noticed some unusual signals coming in from deep space on a particular frequency — hydrogen times tau. After analyzing a trove of data measured at many regular intervals, you compute that you heard zero signals in 45 percent of the intervals, one signal in 38 percent of the intervals and two signals in the remaining 17 percent of the intervals.
